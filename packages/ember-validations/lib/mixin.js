@@ -70,7 +70,7 @@ Ember.Validations.Mixin = Ember.Mixin.create({
 
     return Ember.RSVP.all(deferreds).then(function() {
       if (object.get('stateManager')) {
-        if (Object.keys(object.errors).length === 0) {
+        if (!temErros(object)) {
           if (object.get('isDirty')) {
             object.get('stateManager').transitionTo('uncommitted');
           }
@@ -78,8 +78,15 @@ Ember.Validations.Mixin = Ember.Mixin.create({
           object.get('stateManager').transitionTo('invalid');
         }
       } else {
-        object.set('isValid', Object.keys(object.errors).length === 0);
+        object.set('isValid', !temErros(object));
       }
-    });
+    }).then(null, function(er){alert(er);});
   }
 });
+
+
+function temErros(obj){
+  var keys = Object.keys(obj.errors);
+  keys.removeObject('toString');
+  return keys.length > 0;
+}
