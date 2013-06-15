@@ -75,7 +75,9 @@ Ember.Validations.Mixin = Ember.Mixin.create({
             object.get('stateManager').transitionTo('uncommitted');
           }
         } else {
-          object.get('stateManager').transitionTo('invalid');
+          if (!object.get('isDeleted')){
+            object.get('stateManager').transitionTo('invalid');
+          }
         }
       } else {
         object.set('isValid', !temErros(object));
