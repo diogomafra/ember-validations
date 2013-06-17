@@ -87,8 +87,13 @@ Ember.Validations.Mixin = Ember.Mixin.create({
 });
 
 
-function temErros(obj){
-  var keys = Object.keys(obj.errors);
-  keys.removeObject('toString');
-  return keys.length > 0;
+function temErros(object) {
+  var errors = object.errors;
+  if (errors) {
+    for (var name in errors) {
+      if (errors.hasOwnProperty(name) && errors[name]) { return true; }
+    }
+  }
+
+  return false;
 }
