@@ -82,7 +82,7 @@ Ember.Validations.Mixin = Ember.Mixin.create({
       } else {
         object.set('isValid', !temErros(object));
       }
-    }).then(null, function(er){alert(er);});
+    });
   }
 });
 
